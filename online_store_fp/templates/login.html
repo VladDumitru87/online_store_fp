@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}  Login {% endblock %}
+
+{% block content %}
+
+  <div class="container pt-5">
+    <div class="jumbotron">
+      <h1>Login required:</h1>
+        <form method="post" action="{% url 'accounts:user-login' %}">
+                  {% csrf_token %}
+
+                  <label for="username">Username:</label>
+                  <input type="text" name="username" placeholder="Username">
+
+                  <label for="password">Password:</label>
+                  <input type="password" name="password" placeholder="Password">
+
+                  {% if request.GET.next %}
+                  <input type="hidden" name="next" value="{{request.GET.next}}">
+                  {%endif%}
+
+                  <input type="submit" name="" value="Login">
+            <p class="mt-4">Don't have an account? <a href="{% url 'accounts:user-signup' %}"> REGISTER NOW</a></p>
+        </form>
+    </div>
+  </div>
+
+{% endblock content%}

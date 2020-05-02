@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}  Sign up {% endblock %}
+
+{% block content %}
+
+<div class="container text-center lead">
+
+
+            <div class="display-4 mt-4 mb-4">Sign Up:</div>
+
+              {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                  <ul>
+                      {% for error in form.non_field_errors %}
+                          <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+
+            <form class="rounded pt-3 shadow-lg" method="post">
+
+                {% csrf_token %}
+                <div class="form-group lead">
+
+                    {{ form.non_field_errors }}
+
+                    {% for field in form %}
+                        <fieldset class="form-group d-flex pl-5 ml-5 mr-5 pr-5">
+
+                                <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                                {% if field.errors%}
+                                <div class="alert alert-warning" role="alert">
+                                    {{field.errors}}
+                                </div>
+                                {%endif%}
+                            <div class="d-flex pl-5 ml-5 mr-5 pr-5">
+
+                            {%if field.name == 'password1' or field.name == 'password2' %}
+                                <input type="password" class="form-control" name="{{ field.name }}"
+                                        placeholder="Type {{field.name}} here...">
+                            {%else%}
+                            <input type="text" class="form-control" name="{{ field.name }}"
+                                   placeholder="Type {{field.name}} here...">
+                            {%endif%}
+                            </div>
+
+                        </fieldset>
+                    {% endfor %}
+
+                    <input type="submit" class="form-control btn btn-outline-success w-25 mb-3" value="Register">
+
+                </div>
+
+            </form>
+
+
+        </div>
+
+
+{% endblock content %}

@@ -14,10 +14,11 @@
 
 <body>
     <div id="topbar">
-        {% bloc topbar %}
+        {% block topbar %}
         <ul>
             <li><a href="{% url 'index' %}">Home</a></li>
-            <li><a href="{% url 'accounts' %}">Login</a></li>
+            <li><a href="{% url 'accounts:user-login'%}">Login</a></li>
+            <li><a href="{% url 'accounts:user-logout'%}">Logout</a></li>
         </ul>
         {% endblock %}
     </div>
