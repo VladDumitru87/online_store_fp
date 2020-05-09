@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+  
+{% block title %}Products{% endblock %}
+
+
+{% block content %}
+<div class="d-flex justify-content-center">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">PK</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Image</th>
+                <th scope="col">Date added</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <th scope="row">{{ product.pk }}</th>
+                    <td>{{ product.title }}</td>
+                    <td>{{ product.text }}</td>
+                    <td><img src="{{ product.image }}" width="240"></td>
+                    <td>{{ product.create_date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+
+    </table>
+</div>
+{% endblock content %}
