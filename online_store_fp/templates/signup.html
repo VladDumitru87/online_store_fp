@@ -1,28 +1,62 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
-
+user_account
+{% block title %}  Sign up {% endblock %}
 
 {% block content %}
-<section class="login py-5 border-top-1">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-8 align-item-center">
-                <div class="border">
-                    <h3 class="bg-gray p-4">Sign up</h3>
-                    <form action="#">
-                        <fieldset class="p-4">
-                            <input autocomplete="off" class="border p-3 w-100 my-2" placeholder="Username" type="text">
-                            <input autocomplete="off" class="border p-3 w-100 my-2" placeholder="Password" type="password">
-                            <input autocomplete="off" class="border p-3 w-100 my-2" placeholder="Repeat password" type="password">
-                            <button class="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3" type="submit">
-                                Sign in
-                            </button>
-                        </fieldset>
-                    </form>
+
+<div class="container text-center lead">
+
+
+            <div class="display-4 mt-4 mb-4">Sign Up:</div>
+
+              {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                  <ul>
+                      {% for error in form.non_field_errors %}
+                          <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
                 </div>
-            </div>
+              {% endif %}
+
+            <form class="rounded pt-3 shadow-lg" method="post">
+
+                {% csrf_token %}
+                <div class="form-group lead">
+
+                    {{ form.non_field_errors }}
+
+                    {% for field in form %}
+                        <fieldset class="form-group d-flex pl-5 ml-5 mr-5 pr-5">
+
+                                <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                                {% if field.errors%}
+                                <div class="alert alert-warning" role="alert">
+                                    {{field.errors}}
+                                </div>
+                                {%endif%}
+                            <div class="d-flex pl-5 ml-5 mr-5 pr-5">
+
+                            {%if field.name == 'password1' or field.name == 'password2' %}
+                                <input type="password" class="form-control" name="{{ field.name }}"
+                                        placeholder="Type {{field.name}} here...">
+                            {%else%}
+                            <input type="text" class="form-control" name="{{ field.name }}"
+                                   placeholder="Type {{field.name}} here...">
+                            {%endif%}
+                            </div>
+
+                        </fieldset>
+                    {% endfor %}
+
+                    <input type="submit" class="form-control btn btn-outline-success w-25 mb-3" value="Register">
+
+                </div>
+
+            </form>
+
+
         </div>
-    </div>
-</section>
+
 {% endblock content %}
