@@ -21,7 +21,7 @@ def user_login(request):
                 login(request, user)
                 if 'next' in request.POST:
                     return redirect(request.POST.get('next'))
-                return HttpResponseRedirect(reverse('users-list'))
+                return HttpResponseRedirect(reverse('users:users-list'))
             else:
                 return HttpResponse("Your account is inactive.")
         else:
