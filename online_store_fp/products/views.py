@@ -1,4 +1,4 @@
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import PostAdd
 
@@ -13,4 +13,25 @@ class PostCreateView(CreateView):
     model = PostAdd
     template_name = 'product_create.html'
     fields = '__all__'
+    success_url = reverse_lazy('product_list')
+
+
+class PostDetailView(DetailView):
+    model = PostAdd
+    template_name = 'product_detail.html'
+    context_object_name = 'products'
+
+
+class PostUpdateView(UpdateView):
+    model = PostAdd
+    template_name = 'product_update.html'
+    context_object_name = 'products'
+    fields = '__all__'
+    success_url = reverse_lazy('product_list')
+
+
+class PostDeleteView(DeleteView):
+    model = PostAdd
+    template_name = 'product_update.html'
+    context_object_name = 'products'
     success_url = reverse_lazy('product_list')
