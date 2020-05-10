@@ -3,7 +3,7 @@ from .forms import SignUpForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DeleteView
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -21,7 +21,8 @@ def user_login(request):
                 login(request, user)
                 if 'next' in request.POST:
                     return redirect(request.POST.get('next'))
-                return HttpResponseRedirect(reverse('users:users-list'))
+                return HttpResponseRedirect(reverse('index'))
+                # return render(request, 'index.html', {"user": user, "message": "Data updated"})
             else:
                 return HttpResponse("Your account is inactive.")
         else:
@@ -66,6 +67,11 @@ class UserProfile(LoginRequiredMixin, UpdateView):
         url = reverse_lazy('user-profile', kwargs={'pk': userid})
         return u'%s?%s' % (url, "success=True")
 
+
+class UsersDelete(LoginRequiredMixin, DeleteView):
+    model = User
+    template_name = "user_delete.html"
+    success_url = reverse_lazy('index')
 
 
 
