@@ -42,23 +42,21 @@ def user_logout(request):
 
 
 def user_signup(request):
-    form = UserCreationForm()
+    if request.user.is_authenticated:
+        return redirect('index')
+
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('index')
+    else:
+        form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
-    # if request.user.is_authenticated:
-    #     return redirect('index')
-    #
-    # if request.method == 'POST':
-    #     form = SignUpForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         username = form.cleaned_data.get('username')
-    #         raw_password = form.cleaned_data.get('password1')
-    #         user = authenticate(username=username, password=raw_password)
-    #         login(request, user)
-    #         return redirect('index')
-    # else:
-    #     form = SignUpForm()
-    # return render(request, 'signup.html', {'form': form})
 
 
 class UserProfile(LoginRequiredMixin, UpdateView):
