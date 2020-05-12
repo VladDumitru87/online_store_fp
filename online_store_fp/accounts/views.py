@@ -1,16 +1,19 @@
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignUpForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import UpdateView, DeleteView
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import SignUpForm, UpdateForm
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 
 
 def user_login(request):
     if request.user.is_authenticated:
-        return HttpResponse("You are already logged in :)")
+        return redirect('index')
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -39,21 +42,23 @@ def user_logout(request):
 
 
 def user_signup(request):
-    if request.user.is_authenticated:
-        return redirect('index')
-
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('index')
-    else:
-        form = SignUpForm()
+    form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+    # if request.user.is_authenticated:
+    #     return redirect('index')
+    #
+    # if request.method == 'POST':
+    #     form = SignUpForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         username = form.cleaned_data.get('username')
+    #         raw_password = form.cleaned_data.get('password1')
+    #         user = authenticate(username=username, password=raw_password)
+    #         login(request, user)
+    #         return redirect('index')
+    # else:
+    #     form = SignUpForm()
+    # return render(request, 'signup.html', {'form': form})
 
 
 class UserProfile(LoginRequiredMixin, UpdateView):
@@ -73,6 +78,26 @@ class UsersDelete(LoginRequiredMixin, DeleteView):
     template_name = "user_delete.html"
     success_url = reverse_lazy('index')
 
+
+# the decorator: To access the profile page, users should login
+@login_required
+def user_update(request):
+    if request.method == 'POST':
+        user_form = UpdateForm(request.POST, instance=request.user)
+
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('user-profile')
+
+    else:
+        user_form = UpdateForm(instance=request.user)
+
+    context = {
+        'u_form': user_form,
+    }
+
+    return render(request, 'user.html', context)
 
 
 
