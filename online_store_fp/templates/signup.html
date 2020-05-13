@@ -1,32 +1,72 @@
 {% extends 'base.html' %}
 
-
 {% block title %} Home {% endblock %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
 <section class="login py-5 border-top-1">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-5 col-md-8 align-item-center">
+                <div class="col-lg-50 col-md-8 align-item-center">
                     <div class="border border">
-                        <h3 class="bg-gray p-4">Register Now</h3>
+                        <h3 class="bg-gray p-4">Sign Up</h3>
                         <form method="POST">
                             {% csrf_token %}
                             <fieldset class="p-4">
-                                <input type="email" placeholder="Email*" class="border p-3 w-100 my-2">
-                                <input type="password" placeholder="Password*" class="border p-3 w-100 my-2">
-                                <input type="password" placeholder="Confirm Password*" class="border p-3 w-100 my-2">
-                                <div class="loggedin-forgot d-inline-flex my-3">
-                                        <input type="checkbox" id="registering" class="mt-1">
-                                        <label for="registering" class="px-2">By registering, you accept our <a class="text-primary font-weight-bold" href="terms-condition.html">Terms & Conditions</a></label>
-                                </div>
+                                {{ form|crispy }}
+<!--                                <input type="email" placeholder="Email*" class="border p-3 w-100 my-2">-->
+<!--                                <input type="password" placeholder="Password*" class="border p-3 w-100 my-2">-->
+<!--                                <input type="password" placeholder="Confirm Password*" class="border p-3 w-100 my-2">-->
+<!--                                <div class="loggedin-forgot d-inline-flex my-3">-->
+<!--                                        <input type="checkbox" id="registering" class="mt-1">-->
+<!--                                        <label for="registering" class="px-2">By registering, you accept our <a class="text-primary font-weight-bold" href="terms-condition.html">Terms & Conditions</a></label>-->
+<!--                                </div>-->
                                 <button type="submit" class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">Sign Up</button>
                             </fieldset>
+                            <div class="container text-center lead">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-{% endblock content%}
+
+<!--    <div class="display-4 mt-4 mb-4">Sign Up:</div>-->
+
+<!--      {% if form.non_field_errors %}-->
+<!--        <div class="alert alert-danger" role="alert">-->
+<!--          <ul>-->
+<!--              {% for error in form.non_field_errors %}-->
+<!--                  <li>{{ error }}</li>-->
+<!--              {% endfor %}-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--      {% endif %}-->
+
+<!--    <form class="rounded pt-3 shadow-lg" method="post">-->
+<!--        {% csrf_token %}-->
+<!--        <div class="form-group lead">-->
+<!--            {{ form.non_field_errors }}-->
+<!--            {% for field in form %}-->
+<!--                <fieldset class="form-group d-flex pl-5 ml-5 mr-5 pr-5">-->
+<!--                    <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>-->
+<!--                        {% if field.errors %}-->
+<!--                            <div class="alert alert-warning" role="alert">-->
+<!--                                {{field.errors}}-->
+<!--                            </div>-->
+<!--                        {%endif%}-->
+<!--                    <div class="d-flex pl-5 ml-5 mr-5 pr-5">-->
+    <!--                    {%if field.name == 'password1' or field.name == 'password2' %}-->
+    <!--                        <input type="password" class="form-control" name="{{ field.name }}" placeholder="Type {{field.name}} here...">-->
+    <!--                    {%else%}-->
+    <!--                        <input type="text" class="form-control" name="{{ field.name }}" placeholder="Type {{field.name}} here...">-->
+    <!--                    {%endif%}-->
+<!--                    </div>-->
+<!--                </fieldset>-->
+<!--            {% endfor %}-->
+<!--            <input type="submit" class="form-control btn btn-outline-success w-25 mb-3" value="Register">-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
+
+{% endblock content %}

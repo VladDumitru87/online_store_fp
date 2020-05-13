@@ -8,7 +8,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SignUpForm, UpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 
 
 def user_login(request):
@@ -25,7 +24,6 @@ def user_login(request):
                 if 'next' in request.POST:
                     return redirect(request.POST.get('next'))
                 return HttpResponseRedirect(reverse('index'))
-                # return render(request, 'index.html', {"user": user, "message": "Data updated"})
             else:
                 return HttpResponse("Your account is inactive.")
         else:
