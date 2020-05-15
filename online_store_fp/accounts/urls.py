@@ -1,14 +1,14 @@
 from django.urls import path
-from django.contrib.auth.decorators import login_required
-from .views import user_login, user_logout, user_signup, UserProfile, UsersDelete
+from . import views as user_views
+from django.contrib.auth import views as auth_views
 
 
 app_name = 'accounts'
 urlpatterns = [
-    path('login/', user_login, name="user-login"),
-    path('logout/', user_logout, name="user-logout"),
-    path('signup/', user_signup, name="user-signup"),
-    path('user/<int:pk>', UserProfile.as_view(), name="user-profile"),
-    path('delete/<int:pk>/', login_required(UsersDelete.as_view()), name="user-delete"),
+    path('', user_views.home, name='index'),
+    path('signup', user_views.signup, name='signup'),
+    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name="login"),
+    path('logout/', auth_views.LogoutView.as_view(template_name='accounts/logout.html'), name="logout"),
+    path('user', user_views.user, name='user'),
 ]
 
