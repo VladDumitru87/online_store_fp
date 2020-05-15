@@ -54,7 +54,7 @@
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-light navigation">
-                    <a class="navbar-brand" href="{% url 'index'%}">
+                    <a class="navbar-brand" href="{% url 'accounts:index'%}">
 
                         <img alt="" src="{% static 'images/logo.png' %}">
 
@@ -68,7 +68,7 @@
                         <ul class="navbar-nav ml-auto main-nav ">
                             <li class="nav-item active">
 
-                                <a class="nav-link" href="{% url 'index' %}">Home</a>
+                                <a class="nav-link" href="{% url 'accounts:index' %}">Home</a>
 
                             </li>
                             <li class="nav-item dropdown dropdown-slide">
@@ -109,16 +109,16 @@
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
                                 {% if user.is_authenticated %}
-                                    <a class="nav-link login-button" href="{% url 'accounts:user-profile' user.pk %}">{{user}}</a>
+                                    <a class="nav-link login-button" href="{% url 'accounts:user' %}">{{user.username}}</a>
                                 {% else %}
-                                    <a class="nav-link login-button" href="{% url 'accounts:user-login'%}">Login</a>
+                                    <a class="nav-link login-button" href="{% url 'accounts:login' %}">Login</a>
                                 {% endif %}
                             </li>
                             <li class="nav-item">
                                 {% if user.is_authenticated %}
-                                    <a class="nav-link login-button" href="{% url 'accounts:user-logout'%}">Logout</a>
+                                    <a class="nav-link login-button" href="{% url 'accounts:logout' %}">Logout</a>
                                 {% else %}
-                                    <a class="nav-link login-button" href="{% url 'accounts:user-signup'%}">Sign Up</a>
+                                    <a class="nav-link login-button" href="{% url 'accounts:signup' %}">Sign Up</a>
                                 {% endif %}
                             </li>
                             <li class="nav-item">
@@ -135,14 +135,19 @@
 
 
 <div class="d-flex justify-content-center">
-    {% if messages %}
-        {% for message in massages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
+      <div class="row">
+        <div class="col-md-12">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+          {% block content %}{% endblock %}
         </div>
-        {% endfor %}
-    {% endif %}
-    {% block content %}{% endblock %}
+      </div>
+
 </div>
 
 <!--============================
