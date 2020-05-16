@@ -12,6 +12,7 @@
                 <th scope="col">Description</th>
                 <th scope="col">Image</th>
                 <th scope="col">Date added</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
 
@@ -23,6 +24,10 @@
                     <td>{{ product.text }}</td>
                     <td><img src="{% get_media_prefix %}{{ product.image }}" width="240"></td>
                     <td>{{ product.create_date }}</td>
+                    <td>
+                        <a href="{% url 'product_update' product.pk %}">Update product</a>
+                        <a href="{% url 'product_delete' product.pk %}">Delete product</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
