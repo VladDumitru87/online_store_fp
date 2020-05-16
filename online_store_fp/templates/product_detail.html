@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Products{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+
+    <p>Title: {{ product.title }}</p>
+    <p>Description: {{ product.text }}</p>
+    <p>Date created: {{ product.create_date }}</p><br>
+    <p>Image: <img src="{% get_media_prefix %}{{ product.image }}" width="240"></p>
+
+    <br>
+
+    <a href="{% url 'product_update' product.pk %}">Update product</a>
+    <a href="{% url 'product_delete' product.pk %}">Delete product</a>
+
+</div>
+
+{% endblock content %}

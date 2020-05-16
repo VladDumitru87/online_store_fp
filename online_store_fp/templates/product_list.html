@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Products{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">PK</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Image</th>
+                <th scope="col">Date added</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td scope="row"><a href="{% url 'product_detail' product.pk %}">{{ product.pk }}</a></td>
+                    <td scope="row">{{ product.title }}</td>
+                    <td scope="row">{{ product.text }}</td>
+                    <td scope="row"><img src="{% get_media_prefix %}{{ product.image }}" width="240"></td>
+                    <td scope="row">{{ product.create_date }}</td>
+                    <td>
+                        <a href="{% url 'product_update' product.pk %}">Update product</a>
+                        <a href="{% url 'product_delete' product.pk %}">Delete product</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock content %}
