@@ -19,7 +19,7 @@ class PostCreateView(CreateView):
 class PostDetailView(DetailView):
     model = PostAdd
     template_name = 'product_detail.html'
-    context_object_name = 'products'
+    context_object_name = 'product'
 
 
 class PostUpdateView(UpdateView):
@@ -32,6 +32,6 @@ class PostUpdateView(UpdateView):
 
 class PostDeleteView(DeleteView):
     model = PostAdd
-    template_name = 'product_update.html'
+    template_name = 'product_delete.html'
     context_object_name = 'products'
     success_url = reverse_lazy('product_list')

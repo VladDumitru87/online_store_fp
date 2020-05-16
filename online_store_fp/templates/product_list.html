@@ -19,11 +19,11 @@
         <tbody>
             {% for product in products %}
                 <tr>
-                    <th scope="row">{{ product.pk }}</th>
-                    <td>{{ product.title }}</td>
-                    <td>{{ product.text }}</td>
-                    <td><img src="{% get_media_prefix %}{{ product.image }}" width="240"></td>
-                    <td>{{ product.create_date }}</td>
+                    <td scope="row"><a href="{% url 'product_detail' product.pk %}">{{ product.pk }}</a></td>
+                    <td scope="row">{{ product.title }}</td>
+                    <td scope="row">{{ product.text }}</td>
+                    <td scope="row"><img src="{% get_media_prefix %}{{ product.image }}" width="240"></td>
+                    <td scope="row">{{ product.create_date }}</td>
                     <td>
                         <a href="{% url 'product_update' product.pk %}">Update product</a>
                         <a href="{% url 'product_delete' product.pk %}">Delete product</a>
