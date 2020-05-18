@@ -5,4 +5,6 @@ class AccountsConfig(AppConfig):
     name = 'accounts'
 
     def ready(self):
-        import online_store_fp.accounts.signals
+        import accounts.signals
+    # also to __init__.py add following line:
+    # default_app_config ='accounts.apps.AccountsConfig'
