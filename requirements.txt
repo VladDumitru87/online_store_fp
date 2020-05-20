@@ -1,3 +1,5 @@
+decouple
+dotenv
 asgiref==3.2.7
 Django==3.0.5
 Pillow==7.1.2
